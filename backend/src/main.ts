@@ -7,7 +7,9 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 // Importing routes
-import userRoutes from "@/routes/user.routes";
+import { likeRouter } from "@/routes/like.routes";
+import { postRouter } from "@/routes/post.routes";
+import { userRouter } from "@/routes/user.routes";
 
 // Load environment variables from .env file, where API keys and passwords are configured
 dotenv.config();
@@ -21,11 +23,13 @@ app.use(express.json());
 
 // Setup Routes
 
-app.get("/", (_req, res) => {
-  res.send("Hello World!");
+app.get("/status", (_req, res) => {
+  res.send("Running");
 });
 
-app.use("/user", userRoutes);
+app.use("/user", userRouter);
+app.use("/post", postRouter);
+app.use("/like", likeRouter);
 
 // Start the server
 const port = process.env.PORT || 3000;

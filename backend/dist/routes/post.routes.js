@@ -9,31 +9,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userRouter = void 0;
-const user_controller_1 = require("@/controllers/user.controller");
+exports.postRouter = void 0;
+const post_controller_1 = require("@/controllers/post.controller");
 const express_1 = require("express");
-const userRouter = (0, express_1.Router)();
-exports.userRouter = userRouter;
-userRouter.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, user_controller_1.getUsers)();
+const postRouter = (0, express_1.Router)();
+exports.postRouter = postRouter;
+postRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, post_controller_1.getPosts)(req.params.id);
     res.json(result.rows);
 }));
-userRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, user_controller_1.getUserById)(req.params.id);
+postRouter.get("/:postId/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { postId, userId } = req.params;
+    const result = yield (0, post_controller_1.getPostById)(userId, postId);
     res.json(result.rows[0]);
 }));
-userRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, user_controller_1.createUser)(req.body);
+postRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, post_controller_1.createPost)(req.body);
     if (result)
         res.json(result.rows[0]);
 }));
-userRouter.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, user_controller_1.updateUser)(req.body);
+postRouter.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, post_controller_1.updatePost)(req.body);
     if (result)
         res.json(result.rows[0]);
 }));
-userRouter.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, user_controller_1.deleteUser)(req.params.id);
+postRouter.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, post_controller_1.deletePost)(req.params.id);
     if (result)
         res.json(result.rows[0]);
 }));
